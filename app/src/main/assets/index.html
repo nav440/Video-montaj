@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="uz" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VideoMontaj AI - Professional AI Video Editor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: { 50: '#f5f3ff', 100: '#ede9fe', 500: '#8b5cf6', 600: '#7c3aed', 700: '#6d28d9' }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen font-sans selection:bg-purple-500 selection:text-white">
+
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-800 px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center space-x-3 cursor-pointer" onclick="showSection('home')">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-600 to-cyan-500 flex items-center justify-center shadow-lg shadow-purple-500/30">
+                <i class="fa-solid fa-wand-magic-sparkles text-white text-lg"></i>
+            </div>
+            <span class="text-xl font-bold bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">VideoMontaj AI</span>
+        </div>
+        <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-300">
+            <button onclick="showSection('home')" class="hover:text-purple-400 transition">Asosiy</button>
+            <button onclick="showSection('features')" class="hover:text-purple-400 transition">Imkoniyatlar</button>
+            <button onclick="showSection('saved')" class="hover:text-purple-400 transition">Loyihalarim</button>
+            <button onclick="showSection('pricing')" class="hover:text-purple-400 transition">Tariflar</button>
+        </div>
+        <div>
+            <button onclick="showSection('home')" class="bg-gradient-to-r from-purple-600 to-cyan-500 text-white px-5 py-2.5 rounded-xl font-semibold shadow-lg shadow-purple-500/20 hover:opacity-95 transition">
+                <i class="fa-solid fa-play mr-2"></i> Boshlash
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="max-w-6xl mx-auto px-4 py-8">
+
+        <!-- HOME / STUDIO SECTION -->
+        <section id="section-home" class="space-y-8">
+            <!-- Hero Banner -->
+            <div class="relative rounded-3xl overflow-hidden bg-gradient-to-r from-purple-900/40 via-slate-900 to-cyan-950/40 border border-slate-800 p-8 md:p-12 shadow-2xl">
+                <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(139,92,246,0.15),transparent_50%)]"></div>
+                <div class="relative z-10 max-w-2xl">
+                    <span class="inline-flex items-center space-x-2 bg-purple-500/10 border border-purple-500/30 text-purple-400 text-xs font-semibold px-3 py-1.5 rounded-full mb-4">
+                        <i class="fa-solid fa-sparkles"></i>
+                        <span>Sun'iy Intellekt Boshqaruvidagi Montaj Studio</span>
+                    </span>
+                    <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-4 leading-tight">
+                        Videongizni yuklang, <span class="bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">AI o'zi montaj qilsin!</span>
+                    </h1>
+                    <p class="text-slate-300 text-lg mb-8">
+                        Vaqtingizni tejang. Istalgan videoni yuklab, qanday ko'rinishda bo'lishini yozing — AI avtomatik ravishda eng zo'r kadrlarni tanlaydi, musiqani moslaydi va subtitr qo'shadi.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Studio Editor Card -->
+            <div class="bg-slate-900/60 backdrop-blur-xl border border-slate-800 rounded-3xl p-6 md:p-8 shadow-xl space-y-6">
+                <h2 class="text-2xl font-bold flex items-center space-x-3">
+                    <span class="w-8 h-8 rounded-lg bg-purple-600/20 text-purple-400 flex items-center justify-center text-sm">1</span>
+                    <span>Video Faylni Tanlang</span>
+                </h2>
+
+                <!-- Uploader Box -->
+                <div onclick="document.getElementById('fileInput').click()" class="border-2 border-dashed border-slate-700 hover:border-purple-500/60 rounded-2xl p-8 text-center cursor-pointer transition bg-slate-950/50 group">
+                    <input type="file" id="fileInput" class="hidden" accept="video/*" onchange="handleFileSelect(event)">
+                    <div class="w-16 h-16 bg-purple-600/10 text-purple-400 rounded-2xl mx-auto flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                    </div>
+                    <p id="fileNameDisplay" class="font-semibold text-lg text-slate-200">Video faylni shu yerga tashlang yoki bosing</p>
+                    <p class="text-sm text-slate-400 mt-1">MP4, MOV, WEBM (Maks. 500MB)</p>
+                </div>
+
+                <!-- Sample Videos -->
+                <div>
+                    <p class="text-sm font-semibold text-slate-400 mb-3">Yoki namuna videolardan birini sinab ko'ring:</p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        <div onclick="selectSample('Shahar Sayohati Vlog')" class="bg-slate-800/60 hover:bg-slate-800 border border-slate-700/60 p-3 rounded-xl cursor-pointer transition">
+                            <i class="fa-solid fa-video text-purple-400 mb-2"></i>
+                            <div class="font-semibold text-sm">Vlog Sayohat</div>
+                            <div class="text-xs text-slate-400">0:45 • Dinamik</div>
+                        </div>
+                        <div onclick="selectSample('Tabiat Manzarasi')" class="bg-slate-800/60 hover:bg-slate-800 border border-slate-700/60 p-3 rounded-xl cursor-pointer transition">
+                            <i class="fa-solid fa-mountain-sun text-cyan-400 mb-2"></i>
+                            <div class="font-semibold text-sm">Tabiat & Chill</div>
+                            <div class="text-xs text-slate-400">1:00 • Kinematografik</div>
+                        </div>
+                        <div onclick="selectSample('Sport va Harakat')" class="bg-slate-800/60 hover:bg-slate-800 border border-slate-700/60 p-3 rounded-xl cursor-pointer transition">
+                            <i class="fa-solid fa-bolt text-amber-400 mb-2"></i>
+                            <div class="font-semibold text-sm">Sport Action</div>
+                            <div class="text-xs text-slate-400">0:35 • Tezkor</div>
+                        </div>
+                        <div onclick="selectSample('Texnologiya Review')" class="bg-slate-800/60 hover:bg-slate-800 border border-slate-700/60 p-3 rounded-xl cursor-pointer transition">
+                            <i class="fa-solid fa-laptop-code text-emerald-400 mb-2"></i>
+                            <div class="font-semibold text-sm">Tech Review</div>
+                            <div class="text-xs text-slate-400">0:50 • Studio</div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="border-slate-800 my-6">
+
+                <!-- Prompt Section -->
+                <div class="space-y-4">
+                    <h2 class="text-2xl font-bold flex items-center space-x-3">
+                        <span class="w-8 h-8 rounded-lg bg-purple-600/20 text-purple-400 flex items-center justify-center text-sm">2</span>
+                        <span>AI Rejissyorga Ko'rsatma Bering</span>
+                    </h2>
+                    <textarea id="userPrompt" rows="3" class="w-full bg-slate-950 border border-slate-800 rounded-2xl p-4 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-purple-500 transition" placeholder="Masalan: TikTok uchun juda qiziqarli, tez kadrlar va zamonaviy beat musiqa bilan montaj qil..."></textarea>
+                </div>
+
+                <!-- Style Selector -->
+                <div class="space-y-4">
+                    <h2 class="text-2xl font-bold flex items-center space-x-3">
+                        <span class="w-8 h-8 rounded-lg bg-purple-600/20 text-purple-400 flex items-center justify-center text-sm">3</span>
+                        <span>Montaj Uslubini Tanlang</span>
+                    </h2>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                        <button onclick="setStyle('Kinematografik')" id="style-Kinematografik" class="style-btn bg-purple-600/20 border-2 border-purple-500 text-purple-300 p-4 rounded-xl font-semibold text-left transition">
+                            <i class="fa-solid fa-film mb-2 block text-lg"></i> Kinematografik
+                        </button>
+                        <button onclick="setStyle('Dinamik Vlog')" id="style-Dinamik Vlog" class="style-btn bg-slate-800/60 border border-slate-700 text-slate-300 p-4 rounded-xl font-semibold text-left transition hover:border-slate-500">
+                            <i class="fa-solid fa-clapperboard mb-2 block text-lg text-cyan-400"></i> Dinamik Vlog
+                        </button>
+                        <button onclick="setStyle('TikTok / Reels')" id="style-TikTok / Reels" class="style-btn bg-slate-800/60 border border-slate-700 text-slate-300 p-4 rounded-xl font-semibold text-left transition hover:border-slate-500">
+                            <i class="fa-solid fa-mobile-screen mb-2 block text-lg text-pink-400"></i> TikTok / Reels
+                        </button>
+                        <button onclick="setStyle('Slow Motion')" id="style-Slow Motion" class="style-btn bg-slate-800/60 border border-slate-700 text-slate-300 p-4 rounded-xl font-semibold text-left transition hover:border-slate-500">
+                            <i class="fa-solid fa-gauge-low mb-2 block text-lg text-amber-400"></i> Slow Motion
+                        </button>
+                        <button onclick="setStyle('Cyber Neon')" id="style-Cyber Neon" class="style-btn bg-slate-800/60 border border-slate-700 text-slate-300 p-4 rounded-xl font-semibold text-left transition hover:border-slate-500">
+                            <i class="fa-solid fa-bolt-lightning mb-2 block text-lg text-emerald-400"></i> Cyber Neon
+                        </button>
+                        <button onclick="setStyle('Minimalist')" id="style-Minimalist" class="style-btn bg-slate-800/60 border border-slate-700 text-slate-300 p-4 rounded-xl font-semibold text-left transition hover:border-slate-500">
+                            <i class="fa-solid fa-feather mb-2 block text-lg text-indigo-400"></i> Minimalist
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button onclick="startAiMontage()" class="w-full bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-500 text-white font-bold py-4 rounded-2xl shadow-xl shadow-purple-600/30 hover:opacity-95 transition text-lg flex items-center justify-center space-x-3">
+                    <i class="fa-solid fa-wand-magic-sparkles text-xl"></i>
+                    <span>AI Avto-Montajni Boshlash</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- PROCESSING SECTION -->
+        <section id="section-processing" class="hidden py-24 text-center space-y-8">
+            <div class="relative w-32 h-32 mx-auto">
+                <div class="absolute inset-0 rounded-full border-4 border-purple-500/20 animate-pulse"></div>
+                <div class="absolute inset-0 rounded-full border-4 border-purple-500 border-t-transparent animate-spin"></div>
+                <div class="absolute inset-0 flex items-center justify-center text-purple-400 text-3xl">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                </div>
+            </div>
+            <div class="space-y-2">
+                <h2 class="text-3xl font-extrabold">AI Rejissyor ishlamoqda...</h2>
+                <p id="processingStepText" class="text-slate-400 text-lg">Kadrlarni tahlil qilish va shovqinlarni tozalash...</p>
+            </div>
+        </section>
+
+        <!-- RESULT SECTION -->
+        <section id="section-result" class="hidden space-y-8">
+            <div class="flex justify-between items-center">
+                <button onclick="showSection('home')" class="text-slate-400 hover:text-white flex items-center space-x-2 font-medium">
+                    <i class="fa-solid fa-arrow-left"></i> <span>Orqaga qaytish</span>
+                </button>
+                <h2 class="text-2xl font-bold">AI Montaj Natijasi</h2>
+                <button onclick="saveCurrentProject()" class="bg-purple-600/20 border border-purple-500/50 text-purple-300 px-4 py-2 rounded-xl text-sm font-semibold hover:bg-purple-600/30 transition">
+                    <i class="fa-solid fa-bookmark mr-1"></i> Saqlash
+                </button>
+            </div>
+
+            <!-- Video Player Simulator Card -->
+            <div class="relative rounded-3xl overflow-hidden bg-slate-900 border border-slate-800 shadow-2xl h-80 flex items-center justify-center">
+                <div class="absolute inset-0 bg-cover bg-center opacity-30" style="background-image: url('https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=1200&q=80')"></div>
+                <div class="absolute top-4 left-4 bg-purple-600/90 text-white text-xs font-bold px-3 py-1 rounded-lg" id="resFilterBadge">Kinematografik Grade</div>
+                <div class="absolute top-4 right-4 bg-black/60 text-white text-xs font-semibold px-3 py-1 rounded-lg">00:48 / 01:00</div>
+                
+                <div class="relative z-10 text-center space-y-4">
+                    <button onclick="togglePlay()" id="playPauseBtn" class="w-16 h-16 rounded-full bg-purple-600 text-white flex items-center justify-center text-2xl shadow-xl shadow-purple-600/40 hover:scale-105 transition mx-auto">
+                        <i class="fa-solid fa-play ml-1" id="playIcon"></i>
+                    </button>
+                    <p id="playerStatusText" class="text-slate-300 font-medium text-sm">AI Montaj Tayyor • Ko'rish uchun bosing</p>
+                </div>
+            </div>
+
+            <!-- AI Summary Card -->
+            <div class="bg-gradient-to-r from-purple-900/30 to-indigo-900/30 border border-purple-500/30 rounded-3xl p-6 space-y-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-purple-600/20 text-purple-400 flex items-center justify-center">
+                        <i class="fa-solid fa-robot text-lg"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg">AI Rejissyor Xulosasi</h3>
+                        <p class="text-xs text-purple-300">Avtomatik tahlil va montaj hisoboti</p>
+                    </div>
+                </div>
+                <p id="resSummaryText" class="text-slate-300 leading-relaxed">
+                    Sizning ko'rsatmangiz asosida video muvaffaqiyatli tahrir qilindi. Keraksiz pauzalar olib tashlandi, ranglar jonlantirildi va ritmik tranzisiyalar qo'shildi.
+                </p>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 pt-2 border-t border-purple-500/20 text-sm">
+                    <div><span class="text-slate-400 block">Kesimlar:</span> <strong id="resCutsCount">5 ta kadr</strong></div>
+                    <div><span class="text-slate-400 block">Fon Musiqasi:</span> <strong id="resMusic">Cinematic Beat</strong></div>
+                </div>
+            </div>
+
+            <!-- Timeline Script -->
+            <div class="space-y-4">
+                <h3 class="text-xl font-bold">Avtomatik Kesimlar (Timeline Script)</h3>
+                <div id="timelineScriptContainer" class="space-y-3">
+                    <!-- Populated via JS -->
+                </div>
+            </div>
+
+            <!-- Export Button -->
+            <button onclick="exportVideo()" class="w-full bg-gradient-to-r from-emerald-600 to-cyan-600 text-white font-bold py-4 rounded-2xl shadow-xl shadow-emerald-600/30 hover:opacity-95 transition text-lg flex items-center justify-center space-x-3">
+                <i class="fa-solid fa-download text-xl"></i>
+                <span>Videoni Saqlash & Eksport Qilish</span>
+            </button>
+        </section>
+
+        <!-- SAVED PROJECTS SECTION -->
+        <section id="section-saved" class="hidden space-y-6">
+            <h2 class="text-2xl font-bold">Saqlangan Loyihalar</h2>
+            <div id="savedProjectsList" class="space-y-4">
+                <!-- Populated via JS -->
+            </div>
+        </section>
+
+        <!-- FEATURES SECTION -->
+        <section id="section-features" class="hidden space-y-8">
+            <div class="text-center max-w-2xl mx-auto space-y-3">
+                <h2 class="text-3xl font-bold">Sun'iy Intellekt Imkoniyatlari</h2>
+                <p class="text-slate-400">VideoMontaj AI sizga eng so'nggi neyrotarmoq texnologiyalari yordamida professional muharrir bo'lish imkonini beradi.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-3">
+                    <div class="w-12 h-12 rounded-xl bg-purple-600/20 text-purple-400 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-scissors"></i>
+                    </div>
+                    <h3 class="font-bold text-lg">Smart Avto-Kesish</h3>
+                    <p class="text-slate-400 text-sm">Videodagi jim turgan va keraksiz pauzalarni avtomatik aniqlab qirqib tashlaydi.</p>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-3">
+                    <div class="w-12 h-12 rounded-xl bg-cyan-600/20 text-cyan-400 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-palette"></i>
+                    </div>
+                    <h3 class="font-bold text-lg">Kinematografik Color Grading</h3>
+                    <p class="text-slate-400 text-sm">Ranglarni kino darajasiga ko'taruvchi professional filtrlar va LUT'larni avtomatik qo'llaydi.</p>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-3">
+                    <div class="w-12 h-12 rounded-xl bg-pink-600/20 text-pink-400 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-closed-captioning"></i>
+                    </div>
+                    <h3 class="font-bold text-lg">Avtomatik Subtitr</h3>
+                    <p class="text-slate-400 text-sm">Nutqni aniqlab, ekranga zamonaviy va animatsiyali subtitrlarni joylashtiradi.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRICING SECTION -->
+        <section id="section-pricing" class="hidden space-y-8">
+            <div class="text-center max-w-2xl mx-auto space-y-3">
+                <h2 class="text-3xl font-bold">Qulay Tariflar</h2>
+                <p class="text-slate-400">O'zingizga mos tarifni tanlang va professional darajada videolar yarating.</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                <div class="bg-slate-900 border border-slate-800 p-8 rounded-3xl space-y-6">
+                    <div>
+                        <h3 class="text-xl font-bold">Boshlang'ich</h3>
+                        <p class="text-slate-400 text-sm mt-1">Shaxsiy videoblogerlar uchun</p>
+                        <div class="text-3xl font-extrabold mt-4">Bepul</div>
+                    </div>
+                    <ul class="space-y-3 text-sm text-slate-300">
+                        <li><i class="fa-solid fa-check text-purple-400 mr-2"></i> Kuniga 5 ta AI montaj</li>
+                        <li><span class="text-slate-400">720p HD Eksport</span></li>
+                        <li><span class="text-slate-400">Asosiy uslublar</span></li>
+                    </ul>
+                    <button onclick="showSection('home')" class="w-full bg-slate-800 hover:bg-slate-700 font-semibold py-3 rounded-xl transition">Tanlash</button>
+                </div>
+                <div class="bg-gradient-to-b from-purple-900/40 to-slate-900 border border-purple-500/50 p-8 rounded-3xl space-y-6 relative">
+                    <span class="absolute -top-3 right-8 bg-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full">Mashhur</span>
+                    <div>
+                        <h3 class="text-xl font-bold">PRO Rejissyor</h3>
+                        <p class="text-slate-400 text-sm mt-1">Professional ijodkorlar va agentliklar uchun</p>
+                        <div class="text-3xl font-extrabold mt-4">$19 <span class="text-sm font-normal text-slate-400">/oy</span></div>
+                    </div>
+                    <ul class="space-y-3 text-sm text-slate-300">
+                        <li><i class="fa-solid fa-check text-purple-400 mr-2"></i> Cheksiz AI montaj</li>
+                        <li><i class="fa-solid fa-check text-purple-400 mr-2"></i> 4K Ultra HD Eksport</li>
+                        <li><i class="fa-solid fa-check text-purple-400 mr-2"></i> Barcha premium filtrlar va musiqalar</li>
+                        <li><i class="fa-solid fa-check text-purple-400 mr-2"></i> 24/7 AI Rejissyor yordami</li>
+                    </ul>
+                    <button onclick="showSection('home')" class="w-full bg-gradient-to-r from-purple-600 to-cyan-500 hover:opacity-95 font-semibold py-3 rounded-xl transition shadow-lg shadow-purple-600/30">PRO'ga O'tish</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="max-w-6xl mx-auto px-4 py-8 mt-16 border-t border-slate-900 text-center text-sm text-slate-500">
+        <p>&copy; 2026 VideoMontaj AI. Barcha huquqlar himoyalangan.</p>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        let selectedVideoName = "Mening_Vlog_Videom.mp4";
+        let currentStyle = "Kinematografik";
+        let savedProjects = [];
+        let currentProjectData = null;
+        let isPlayingState = false;
+
+        function showSection(sectionId) {
+            ['home', 'processing', 'result', 'saved', 'features', 'pricing'].forEach(id => {
+                document.getElementById('section-' + id).classList.add('hidden');
+            });
+            document.getElementById('section-' + sectionId).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (sectionId === 'saved') renderSavedProjects();
+        }
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                selectedVideoName = file.name;
+                document.getElementById('fileNameDisplay').textContent = "Tanlangan: " + file.name;
+            }
+        }
+
+        function selectSample(title) {
+            selectedVideoName = title + ".mp4";
+            document.getElementById('fileNameDisplay').textContent = "Tanlangan namuna: " + selectedVideoName;
+        }
+
+        function setStyle(style) {
+            currentStyle = style;
+            document.querySelectorAll('.style-btn').forEach(btn => {
+                btn.className = "style-btn bg-slate-800/60 border border-slate-700 text-slate-300 p-4 rounded-xl font-semibold text-left transition hover:border-slate-500";
+            });
+            const activeBtn = document.getElementById('style-' + style);
+            if (activeBtn) {
+                activeBtn.className = "style-btn bg-purple-600/20 border-2 border-purple-500 text-purple-300 p-4 rounded-xl font-semibold text-left transition";
+            }
+        }
+
+        function startAiMontage() {
+            showSection('processing');
+            const prompt = document.getElementById('userPrompt').value || "Avtomatik mukammal montaj";
+
+            const steps = [
+                "Kadrlarni tahlil qilish va shovqinlarni tozalash...",
+                "AI avtomatik kesish va ritm rejasini tuzmoqda...",
+                "Rang korreksiyasi va kinematografik filtrlar tanlanmoqda...",
+                "Fon musiqasi va avtomatik subtitrlar sinxronlanmoqda..."
+            ];
+
+            let i = 0;
+            const interval = setInterval(() => {
+                i++;
+                if (i < steps.length) {
+                    document.getElementById('processingStepText').textContent = steps[i];
+                } else {
+                    clearInterval(interval);
+                    generateProjectResult(prompt);
+                }
+            }, 800);
+        }
+
+        function generateProjectResult(prompt) {
+            currentProjectData = {
+                id: 'proj_' + Date.now(),
+                title: selectedVideoName,
+                style: currentStyle,
+                prompt: prompt,
+                duration: 52,
+                filter: currentStyle + " Grade",
+                music: "Epic Cinematic & Lo-Fi Beat",
+                summary: `"${prompt}" talabingiz va '${currentStyle}' uslubi asosida AI videoni to'liq tahlil qildi. Barcha keraksiz pauzalar olib tashlanib, kinematografik rang korreksiyasi va ritmik o'tishlar qo'shildi.`,
+                cuts: [
+                    { time: "00:00 - 00:08", desc: "Kirish: Diqqatni tortuvchi kadr va musiqiy intro", effect: "Cinematic Zoom In" },
+                    { time: "00:08 - 00:22", desc: "Asosiy voqea: Ritmik kesimlar va tezkor harakatlar", effect: "Dynamic Beat Cuts" },
+                    { time: "00:22 - 00:35", desc: "Vizual urg'u: Ranglarni to'yingan va yorqin qilish", effect: "Teal & Orange Grade" },
+                    { time: "00:35 - 00:48", desc: "Dinamik effektlar: Zamonaviy o'tishlar va matnlar", effect: "Smooth Warp Slide" },
+                    { time: "00:48 - 01:02", desc: "Yakuniy qism: Ta'sirli xulosa va fade out", effect: "Cinematic Fade Out" }
+                ]
+            };
+
+            // Populate Result UI
+            document.getElementById('resFilterBadge').textContent = currentProjectData.filter;
+            document.getElementById('resSummaryText').textContent = currentProjectData.summary;
+            document.getElementById('resCutsCount').textContent = currentProjectData.cuts.length + " ta kadr";
+            document.getElementById('resMusic').textContent = currentProjectData.music;
+
+            const container = document.getElementById('timelineScriptContainer');
+            container.innerHTML = '';
+            currentProjectData.cuts.forEach(c => {
+                container.innerHTML += `
+                    <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl flex justify-between items-center">
+                        <div>
+                            <div class="flex items-center space-x-2 mb-1">
+                                <span class="bg-purple-600/20 text-purple-300 text-xs font-bold px-2 py-0.5 rounded">${c.time}</span>
+                                <span class="text-xs font-bold text-cyan-400">${c.effect}</span>
+                            </div>
+                            <p class="text-sm text-slate-200">${c.desc}</p>
+                        </div>
+                        <i class="fa-solid fa-film text-slate-700 text-lg"></i>
+                    </div>
+                `;
+            });
+
+            showSection('result');
+        }
+
+        function togglePlay() {
+            isPlayingState = !isPlayingState;
+            const icon = document.getElementById('playIcon');
+            const status = document.getElementById('playerStatusText');
+            if (isPlayingState) {
+                icon.className = "fa-solid fa-pause";
+                status.textContent = "AI Video Ijro Etilmoqda...";
+            } else {
+                icon.className = "fa-solid fa-play ml-1";
+                status.textContent = "AI Montaj Tayyor • Ko'rish uchun bosing";
+            }
+        }
+
+        function saveCurrentProject() {
+            if (currentProjectData && !savedProjects.some(p => p.id === currentProjectData.id)) {
+                savedProjects.unshift(currentProjectData);
+                alert("Loyiha muvaffaqiyatli saqlandi!");
+            }
+        }
+
+        function renderSavedProjects() {
+            const listContainer = document.getElementById('savedProjectsList');
+            if (savedProjects.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="text-center py-16 text-slate-500">
+                        <i class="fa-solid fa-folder-open text-4xl mb-3"></i>
+                        <p>Hozircha saqlangan loyihalar yo'q</p>
+                    </div>
+                `;
+                return;
+            }
+
+            listContainer.innerHTML = '';
+            savedProjects.forEach(p => {
+                listContainer.innerHTML += `
+                    <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl flex justify-between items-center">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-xl bg-purple-600/20 text-purple-400 flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-video"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg">${p.title}</h3>
+                                <p class="text-xs text-slate-400">Uslub: ${p.style} • Kesimlar: ${p.cuts.length} ta</p>
+                            </div>
+                        </div>
+                        <button onclick="loadProject('${p.id}')" class="bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded-xl text-sm font-semibold transition">
+                            Ochish
+                        </button>
+                    </div>
+                `;
+            });
+        }
+
+        function loadProject(id) {
+            const found = savedProjects.find(p => p.id === id);
+            if (found) {
+                currentProjectData = found;
+                document.getElementById('resFilterBadge').textContent = found.filter;
+                document.getElementById('resSummaryText').textContent = found.summary;
+                document.getElementById('resCutsCount').textContent = found.cuts.length + " ta kadr";
+                document.getElementById('resMusic').textContent = found.music;
+                showSection('result');
+            }
+        }
+
+        function exportVideo() {
+            alert("Video muvaffaqiyatli eksport qilindi va yuklab olindi! 🎉");
+        }
+    </script>
+</body>
+</html>

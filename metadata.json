@@ -1,0 +1,6 @@
+{
+  "name": "VideoMontaj AI",
+  "description": "AI-powered video editor and auto-montage director in Uzbek",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
